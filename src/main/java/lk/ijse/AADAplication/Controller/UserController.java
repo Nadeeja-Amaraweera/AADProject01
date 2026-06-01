@@ -17,7 +17,7 @@ public class UserController {
         this.userService=userService;
     }
 
-    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "save", produces = MediaType.APPLICATION_JSON_VALUE)
     public UserDTO saveUser(){
         return userService.saveUser();
     }
@@ -30,5 +30,22 @@ public class UserController {
     @GetMapping(value = "/userdetails/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
     public UserDTO getUserDetails(@PathVariable long id){
         return userService.getUserDetail(id);
+    }
+
+    @PutMapping(value = "update", produces = MediaType.APPLICATION_JSON_VALUE)
+    public UserDTO updateUserData(@RequestBody UserDTO userDTO){
+        return userService.updateUser(userDTO);
+    }
+
+    @PatchMapping(value = "update/status", produces = MediaType.APPLICATION_JSON_VALUE)
+    public String updateUserStatus(@RequestBody UserDTO userDTO) {
+        userService.updateUserStatus(userDTO);
+        return "Update OK";
+    }
+
+    @DeleteMapping(value = "/delete/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public String deleteUser(@PathVariable long id) {
+        userService.deleteUser(id);
+        return "Delete OK";
     }
 }

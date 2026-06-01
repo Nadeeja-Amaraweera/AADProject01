@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -51,7 +52,7 @@ public class DepartmentServiceImpl implements DepartmentService {
 
             for (Department department : departmentList){
                 DepartmentDTO departmentDTO = new DepartmentDTO();
-//                departmentDTO.setDepartmentId(department.getDepartmentId());
+                departmentDTO.setDepartmentId(department.getDepartmentId());
                 departmentDTO.setDepartmentName(department.getDepartmentName());
                 departmentDTO.setDepartmentLocation(department.getDepartmentLocation());
 
@@ -64,6 +65,29 @@ public class DepartmentServiceImpl implements DepartmentService {
         } catch (Exception e){
 
             throw e;
+        }
+    }
+
+    @Override
+    public DepartmentDTO updateDepartment(DepartmentDTO departmentDTO) {
+        Optional<Department> optionalDepartment = departmentRepository.findById(departmentDTO.getDepartmentId());
+
+        if (optionalDepartment.isPresent()){
+            Department department = optionalDepartment.get();
+            department.setDepartmentName(departmentDTO.getDepartmentName());
+            department.setDepartmentLocation(departmentDTO.getDepartmentLocation());
+
+            Department updateDepartment = departmentRepository.save(department);
+
+            DepartmentDTO responseDTO = new DepartmentDTO();
+            responseDTO.setDepartmentId(updateDepartment.getDepartmentId());
+            responseDTO.setDepartmentName(updateDepartment.getDepartmentName());
+            responseDTO.setDepartmentLocation(updateDepartment.getDepartmentLocation());
+
+            return responseDTO;
+        } else {
+            log.error("No Department found with ID: {}", departmentDTO.getDepartmentId());
+            throw new RuntimeException("No Department found with ID: " + departmentDTO.getDepartmentId());
         }
     }
 }

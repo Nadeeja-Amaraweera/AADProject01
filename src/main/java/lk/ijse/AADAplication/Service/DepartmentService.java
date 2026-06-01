@@ -10,4 +10,6 @@ public interface DepartmentService {
 
     List<DepartmentDTO> getAllDepartment();
 
+    DepartmentDTO updateDepartment(DepartmentDTO departmentDTO);
+
 }

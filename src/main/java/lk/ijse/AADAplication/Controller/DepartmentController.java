@@ -28,4 +28,11 @@ public class DepartmentController {
     public List<DepartmentDTO> getAllDepartment(){
         return departmentService.getAllDepartment();
     }
+
+    @PutMapping(value = "/update",produces = MediaType.APPLICATION_JSON_VALUE)
+    public DepartmentDTO updateDepartment(@RequestBody DepartmentDTO departmentDTO){
+        return departmentService.updateDepartment(departmentDTO);
+    }
+
+
 }

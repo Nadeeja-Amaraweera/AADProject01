@@ -103,4 +103,77 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    @Override
+    public UserDTO updateUser(UserDTO userDTO) {
+        log.info("Update User Detail" + userDTO.getUserId());
+        try {
+            Optional<User> optionalUser = userRepository.findById(userDTO.getUserId());
+            if (!optionalUser.isPresent()){
+                throw new RuntimeException("Can not find the user");
+            }
+
+            User user = new User();
+            user.setUserId(userDTO.getUserId());
+            user.setFirstName(userDTO.getFirstName());
+            user.setLastName(userDTO.getLastName());
+            user.setDob(userDTO.getDob());
+            user.setUserStatus(userDTO.getUserStatus());
+
+            User saveUser = userRepository.save(user);
+
+             UserDTO responseDTO = new UserDTO();
+
+             responseDTO.setUserId(saveUser.getUserId());
+             responseDTO.setFirstName(saveUser.getFirstName());
+             responseDTO.setLastName(saveUser.getLastName());
+             responseDTO.setDob(saveUser.getDob());
+             responseDTO.setUserStatus(saveUser.getUserStatus());
+
+             return responseDTO;
+
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
+    @Override
+    public void updateUserStatus(UserDTO userDTO) {
+        log.info("Update User Status"+userDTO.getUserId());
+        try {
+            Optional<User> optionalUser = userRepository.findById(userDTO.getUserId());
+            if (!optionalUser.isPresent()) {
+                throw new RuntimeException("Can not find the user");
+            }
+
+            if (userDTO.getUserStatus() == null) {
+                throw new RuntimeException("User status cannot be null");
+            }
+            User user = optionalUser.get();
+            user.setUserStatus(userDTO.getUserStatus());
+            userRepository.save(user);
+
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
+    @Override
+    public void deleteUser(long id) {
+        log.info("Delete User"+id);
+        try {
+            Optional<User> optionalUser = userRepository.findById(id);
+            if (!optionalUser.isPresent()) {
+                throw new RuntimeException("Can not find the user");
+            }
+
+            User user = optionalUser.get();
+            user.setUserStatus(UserStatus.DELETE);
+
+            userRepository.save(user);
+
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
 }
