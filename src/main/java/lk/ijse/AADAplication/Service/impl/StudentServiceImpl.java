@@ -16,19 +16,21 @@ public class StudentServiceImpl implements StudentService {
 
     private final StudentRepository studentRepository;
 
+
     public StudentServiceImpl(StudentRepository studentRepository) {
         this.studentRepository = studentRepository;
     }
 
 
     @Override
-    public StudentDTO saveStudent() {
+    public StudentDTO saveStudent(StudentDTO studentDTO) {
         log.info("StudentServiceImpl - saveStudent() called");
         Student student = new Student();
-        student.setFirstName("Nadeeja");
-        student.setLastName("Amaraweera");
-        student.setDob("2004-08-30");
-        student.setAddress("Galle");
+        student.setStudentId(studentDTO.getStudentId());
+        student.setFirstName(studentDTO.getFirstName());
+        student.setLastName(studentDTO.getLastName());
+        student.setDob(studentDTO.getDob());
+        student.setAddress(studentDTO.getAddress());
 
         Student saveStudent = studentRepository.save(student);
 

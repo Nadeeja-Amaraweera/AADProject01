@@ -17,8 +17,8 @@ public class StudentController {
     }
 
     @PostMapping(value = "/save" , produces = MediaType.APPLICATION_JSON_VALUE)
-    public StudentDTO saveStudent() {
-       return studentService.saveStudent();
+    public StudentDTO saveStudent(@RequestBody StudentDTO studentDTO) {
+       return studentService.saveStudent(studentDTO);
     }
 
     @GetMapping(value = "/all", produces = MediaType.APPLICATION_JSON_VALUE)

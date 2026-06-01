@@ -13,4 +13,14 @@ public class StudentDTO {
     private String lastName;
     private String dob;
     private String address;
+
+    private long schoolId;
+
+    public StudentDTO(long studentId, String firstName, String lastName, String dob, String address) {
+        this.studentId = studentId;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.dob = dob;
+        this.address = address;
+    }
 }

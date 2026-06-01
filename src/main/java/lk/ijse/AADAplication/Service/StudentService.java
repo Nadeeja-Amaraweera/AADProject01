@@ -5,7 +5,7 @@ import lk.ijse.AADAplication.dto.StudentDTO;
 import java.util.List;
 
 public interface StudentService {
-    StudentDTO saveStudent();
+    StudentDTO saveStudent(StudentDTO studentDTO);
 
     List<StudentDTO> getAllStudent();
 
