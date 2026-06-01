@@ -18,4 +18,7 @@ public class Student {
     private String lastName;
     private String dob;
     private String address;
+
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private School school;
 }
