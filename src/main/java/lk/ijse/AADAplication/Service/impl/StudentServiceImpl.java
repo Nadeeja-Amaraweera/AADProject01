@@ -1,8 +1,11 @@
 package lk.ijse.AADAplication.Service.impl;
 
+import lk.ijse.AADAplication.Entity.School;
 import lk.ijse.AADAplication.Entity.Student;
+import lk.ijse.AADAplication.Repository.SchoolRepository;
 import lk.ijse.AADAplication.Repository.StudentRepository;
 import lk.ijse.AADAplication.Service.StudentService;
+import lk.ijse.AADAplication.dto.SchoolDTO;
 import lk.ijse.AADAplication.dto.StudentDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -15,10 +18,12 @@ import java.util.Optional;
 public class StudentServiceImpl implements StudentService {
 
     private final StudentRepository studentRepository;
+    private final SchoolRepository schoolRepository;
 
 
-    public StudentServiceImpl(StudentRepository studentRepository) {
+    public StudentServiceImpl(StudentRepository studentRepository,SchoolRepository schoolRepository) {
         this.studentRepository = studentRepository;
+        this.schoolRepository = schoolRepository;
     }
 
 
@@ -32,6 +37,14 @@ public class StudentServiceImpl implements StudentService {
         student.setDob(studentDTO.getDob());
         student.setAddress(studentDTO.getAddress());
 
+        Optional<School> schoolOptional = schoolRepository.findById(studentDTO.getSchoolId());
+        if (!schoolOptional.isPresent()) {
+            throw new RuntimeException("School not found with ID: " + studentDTO.getSchoolId());
+        }
+
+        School school = schoolOptional.get();
+        student.setSchool(school);
+
         Student saveStudent = studentRepository.save(student);
 
         StudentDTO responseDTO = new StudentDTO();
@@ -42,6 +55,7 @@ public class StudentServiceImpl implements StudentService {
         responseDTO.setLastName(saveStudent.getLastName());
         responseDTO.setDob(saveStudent.getDob());
         responseDTO.setAddress(saveStudent.getAddress());
+        responseDTO.setSchoolId(saveStudent.getSchool().getSchoolId());
 
         log.info("StudentDTO created with ID: {}", responseDTO.getStudentId());
         return responseDTO;
