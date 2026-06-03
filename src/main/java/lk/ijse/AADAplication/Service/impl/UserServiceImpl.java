@@ -112,7 +112,8 @@ public class UserServiceImpl implements UserService {
                 throw new RuntimeException("Can not find the user");
             }
 
-            User user = new User();
+            User user = optionalUser.get();
+
             user.setUserId(userDTO.getUserId());
             user.setFirstName(userDTO.getFirstName());
             user.setLastName(userDTO.getLastName());
