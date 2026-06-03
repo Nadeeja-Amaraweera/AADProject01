@@ -42,6 +42,8 @@ public class StudentServiceImpl implements StudentService {
             throw new RuntimeException("School not found with ID: " + studentDTO.getSchoolId());
         }
 
+
+
         School school = schoolOptional.get();
         student.setSchool(school);
 

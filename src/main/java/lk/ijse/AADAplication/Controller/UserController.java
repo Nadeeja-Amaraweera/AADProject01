@@ -2,11 +2,13 @@ package lk.ijse.AADAplication.Controller;
 
 import lk.ijse.AADAplication.Service.UserService;
 import lk.ijse.AADAplication.dto.UserDTO;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequestMapping("v1/api/user")
 public class UserController {
