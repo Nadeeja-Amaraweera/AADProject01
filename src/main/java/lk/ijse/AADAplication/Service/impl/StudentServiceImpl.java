@@ -26,7 +26,6 @@ public class StudentServiceImpl implements StudentService {
         this.schoolRepository = schoolRepository;
     }
 
-
     @Override
     public StudentDTO saveStudent(StudentDTO studentDTO) {
         log.info("StudentServiceImpl - saveStudent() called");
@@ -41,8 +40,6 @@ public class StudentServiceImpl implements StudentService {
         if (!schoolOptional.isPresent()) {
             throw new RuntimeException("School not found with ID: " + studentDTO.getSchoolId());
         }
-
-
 
         School school = schoolOptional.get();
         student.setSchool(school);
@@ -78,6 +75,7 @@ public class StudentServiceImpl implements StudentService {
                 studentDTO.setLastName(student.getLastName());
                 studentDTO.setDob(student.getDob());
                 studentDTO.setAddress(student.getAddress());
+                studentDTO.setSchoolId(student.getSchool().getSchoolId());
 
                 responseList.add(studentDTO);
             }
@@ -107,6 +105,7 @@ public class StudentServiceImpl implements StudentService {
             studentDTO.setLastName(student.getLastName());
             studentDTO.setDob(student.getDob());
             studentDTO.setAddress(student.getAddress());
+            studentDTO.setSchoolId(student.getSchool().getSchoolId());
 
             return studentDTO;
         } catch (Exception e) {
@@ -144,6 +143,13 @@ public class StudentServiceImpl implements StudentService {
             student.setDob(studentDTO.getDob());
             student.setAddress(studentDTO.getAddress());
 
+            Optional<School> schoolOptional = schoolRepository.findById(studentDTO.getSchoolId());
+            if (!schoolOptional.isPresent()) {
+                throw new RuntimeException("School not found with ID: " + studentDTO.getSchoolId());
+            }
+            School school = schoolOptional.get();
+            student.setSchool(school);
+
             Student updatedStudent = studentRepository.save(student);
 
             StudentDTO responseDTO = new StudentDTO();
@@ -153,6 +159,7 @@ public class StudentServiceImpl implements StudentService {
             responseDTO.setLastName(updatedStudent.getLastName());
             responseDTO.setDob(updatedStudent.getDob());
             responseDTO.setAddress(updatedStudent.getAddress());
+            responseDTO.setSchoolId(updatedStudent.getSchool().getSchoolId());
 
             log.info("Student updated with ID: {}", responseDTO.getStudentId());
             return responseDTO;
