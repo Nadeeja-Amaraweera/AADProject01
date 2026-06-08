@@ -90,4 +90,28 @@ public class DepartmentServiceImpl implements DepartmentService {
             throw new RuntimeException("No Department found with ID: " + departmentDTO.getDepartmentId());
         }
     }
+
+    @Override
+    public List<DepartmentDTO> filterDepartment(String departmentName, String departmentLocation) {
+        log.info("Filter department");
+        try {
+            List<DepartmentDTO> responseList = new ArrayList<>();
+
+            List<Department> departmentList = departmentRepository.filterDepartment(departmentName,departmentLocation);
+
+            for (Department department : departmentList){
+                DepartmentDTO departmentDTO = new DepartmentDTO();
+                departmentDTO.setDepartmentId(department.getDepartmentId());
+                departmentDTO.setDepartmentName(department.getDepartmentName());
+                departmentDTO.setDepartmentLocation(department.getDepartmentLocation());
+
+
+                responseList.add(departmentDTO);
+            }
+            return responseList;
+        } catch (Exception e){
+            throw e;
+        }
+
+    }
 }

@@ -34,5 +34,10 @@ public class DepartmentController {
         return departmentService.updateDepartment(departmentDTO);
     }
 
+    @GetMapping(value = "/filter",produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<DepartmentDTO> filterDepartment(@RequestParam String departmentName, @RequestParam String departmentLocation){
+        return departmentService.filterDepartment(departmentName,departmentLocation);
+    }
+
 
 }
