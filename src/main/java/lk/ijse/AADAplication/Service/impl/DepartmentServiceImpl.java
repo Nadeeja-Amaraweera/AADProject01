@@ -31,12 +31,12 @@ public class DepartmentServiceImpl implements DepartmentService {
         department.setDepartmentLocation(departmentDTO.getDepartmentLocation());
 
         Department department1 = departmentRepository.save(department);
-//        log.info("Department Save Successful");
+        log.info("Department Save Successful");
 
-//        DepartmentDTO responseDTO = new DepartmentDTO();
-//        responseDTO.setDepartmentId(department1.getDepartmentId());
-//        responseDTO.setDepartmentName(department1.getDepartmentName());
-//        responseDTO.setDepartmentLocation(department1.getDepartmentLocation());
+        DepartmentDTO responseDTO = new DepartmentDTO();
+        responseDTO.setDepartmentId(department1.getDepartmentId());
+        responseDTO.setDepartmentName(department1.getDepartmentName());
+        responseDTO.setDepartmentLocation(department1.getDepartmentLocation());
 
         return departmentDTO;
     }

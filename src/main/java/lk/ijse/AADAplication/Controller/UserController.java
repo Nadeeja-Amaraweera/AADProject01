@@ -50,4 +50,10 @@ public class UserController {
         userService.deleteUser(id);
         return "Delete OK";
     }
+
+    @GetMapping(value = "/filter",produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<UserDTO> filterUser(@RequestParam String firstName, @RequestParam String lastName){
+        return userService.filterUsers(firstName,lastName);
+    }
+
 }

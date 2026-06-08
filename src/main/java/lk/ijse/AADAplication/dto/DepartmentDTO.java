@@ -8,7 +8,14 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class DepartmentDTO {
+
     private long departmentId;
     private String departmentName;
     private String departmentLocation;
+
+
+    public DepartmentDTO(String departmentName, String departmentLocation) {
+        this.departmentName = departmentName;
+        this.departmentLocation = departmentLocation;
+    }
 }

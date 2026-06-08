@@ -27,8 +27,8 @@ public class UserServiceImpl implements UserService {
     public UserDTO saveUser() {
         log.info("UserServiceImpl - saveUser() called");
         User user = new User();
-        user.setFirstName("John");
-        user.setLastName("Doe");
+        user.setFirstName("Nadeeja");
+        user.setLastName("Amaraweera");
         user.setDob(new Date());
         user.setUserStatus(UserStatus.ACTIVE);
 
@@ -175,6 +175,33 @@ public class UserServiceImpl implements UserService {
         } catch (Exception e) {
             throw e;
         }
+    }
+
+    @Override
+    public List<UserDTO> filterUsers(String firstName,String lastName) {
+        log.info("Filter User with firstName: {} and lastName: {}", firstName, lastName);
+        try {
+
+            List<UserDTO> responseList = new ArrayList<>();
+
+            List<User> userList = userRepository.filterUsers(firstName,lastName);
+
+            for (User user : userList){
+                UserDTO userDTO = new UserDTO();
+                userDTO.setUserId(user.getUserId());
+                userDTO.setFirstName(user.getFirstName());
+                userDTO.setLastName(user.getLastName());
+                userDTO.setDob(user.getDob());
+                userDTO.setUserStatus(user.getUserStatus());
+
+                responseList.add(userDTO);
+            }
+            return responseList;
+
+        }catch (Exception e){
+            throw e;
+        }
+
     }
 
 }
